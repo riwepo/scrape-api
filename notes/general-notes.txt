@@ -20,6 +20,11 @@ the first port is the host port
 the second port is the port inside docker
 docker run -p 3001:3001 scrape-api
 
+to know what port on the host machine is mapped to docker
+use command
+docker ps
+I couldn't see how to do it from docker desktop
+
 you can also set the port from command line when launching
 or from docker desktop by adding a PORT variable when launching
 
