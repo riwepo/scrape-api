@@ -1,5 +1,12 @@
-to run a port from powershell use -
-Invoke-WebRequest -Uri "http://localhost:3000/scrape" `
+note port 3000 is in use
+had to use port 3001
+
+note there is a setting in docker networking
+enable host networking that must be checked
+then the container can be reached without specifying the host
+
+to run a post from powershell use -
+Invoke-WebRequest -Uri "http://localhost:3001/scrape" `
   -Method POST `
   -Headers @{ "Content-Type" = "application/json" } `
   -Body '{"url": "https://www.ted.com/talks/eric_schmidt_the_ai_revolution_is_underhyped/transcript", "selector": "button > div > i:first-of-type"}'
@@ -7,5 +14,23 @@ Invoke-WebRequest -Uri "http://localhost:3000/scrape" `
 to build docker image
 docker build -t scrape-api .
 
-to run docker image, map a directory and drop into bash shell
-docker run -it -v C:/temp:/output ted-scrape /bin/bash
+to run docker image
+-p maps port from outside to inside
+the first port is the host port
+the second port is the port inside docker
+docker run -p 3001:3001 scrape-api
+
+you can also set the port from command line when launching
+or from docker desktop by adding a PORT variable when launching
+
+
+to try it inside the container
+there is a terminal in docker desktop
+curl -v http://localhost:3001/ping
+curl -X POST http://localhost:3001/scrape -H "Content-Type: application/json" -d '{"url": "https://www.ted.com/talks/eric_schmidt_the_ai_revolution_is_underhyped/transcript", "selector": "button > div > i:first-of-type" }'
+
+
+
+
+
+
