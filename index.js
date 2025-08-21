@@ -1,12 +1,13 @@
 const express = require('express');
 const puppeteer = require('puppeteer');
+const os = require('os')
 
 const app = express();
 app.use(express.json());
 
 app.get('/ping', (req, res) => {
   console.log('Ping received');
-  res.send('pong');
+  res.send(`hello from ${os.hostname()}`);
 });
 
 app.post('/scrape', async (req, res) => {
@@ -50,7 +51,7 @@ app.post('/scrape', async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
-  console.log(`Serverx running on port ${PORT}`);
+  console.log(`Server running on host ${os.hostname()} and port ${PORT}`);
 });
