@@ -1,0 +1,5 @@
+to run a port from powershell use -
+Invoke-WebRequest -Uri "http://localhost:3000/scrape" `
+  -Method POST `
+  -Headers @{ "Content-Type" = "application/json" } `
+  -Body '{"url": "https://www.ted.com/talks/eric_schmidt_the_ai_revolution_is_underhyped/transcript", "selector": "button > div > i:first-of-type"}'
