@@ -4,8 +4,16 @@ const puppeteer = require('puppeteer');
 const app = express();
 app.use(express.json());
 
+app.get('/ping', (req, res) => {
+  console.log('Ping received');
+  res.send('pong');
+});
+
 app.post('/scrape', async (req, res) => {
   const { url, selector } = req.body;
+  console.log("received scrape post")
+  console.log("url " + url)
+  console.log("selector " + selector)
 
   if (!url || !selector) {
     return res.status(400).json({ error: 'Missing url or selector' });
@@ -22,14 +30,19 @@ app.post('/scrape', async (req, res) => {
 
   const cleanSelector = selector.trim();
 
+  let browser;
   try {
-    const browser = await puppeteer.launch({ headless: 'new' });
+    browser = await puppeteer.launch({
+          headless: 'new', // or true
+          args: ['--no-sandbox', '--disable-setuid-sandbox']
+        });
     const page = await browser.newPage();
     await page.goto(cleanUrl);
     await page.waitForSelector(selector, { timeout: 5000 });
     const html = await page.content();
     res.json({ html: html });
   } catch (err) {
+    console.error('Scrape failed:', err);
     res.status(500).json({ error: err.message });
   }
   finally {
@@ -39,5 +52,5 @@ app.post('/scrape', async (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`Serverx running on port ${PORT}`);
 });
