@@ -11,8 +11,8 @@ RUN npm ci --omit=dev
 # Copy your app code
 COPY . .
 
-# Optional: expose your Express port
-EXPOSE 3000
+# Expose the Express port
+EXPOSE 3001
 
 # Default command
 CMD ["node", "index.js"]
