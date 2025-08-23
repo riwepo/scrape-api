@@ -52,6 +52,7 @@ app.post('/scrape', async (req, res) => {
 });
 
 const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => {
-  console.log(`Server running on host ${os.hostname()} and port ${PORT}`);
+const HOST = "0.0.0.0"
+app.listen(PORT, HOST, () => {
+  console.log(`Server running on host ${os.hostname()} and port ${PORT} and interface ${HOST}`);
 });
