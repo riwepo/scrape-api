@@ -52,8 +52,13 @@ app.post('/scrape', async (req, res) => {
 });
 
 const env = process.env.APP_ENV || 'dev';
-const host = env === 'docker' ? '0.0.0.0' : 'localhost';
-const port = process.env.PORT || 3001;
-app.listen(port, host, () => {
-  console.log(`Server running on host ${os.hostname()} and port ${port} and interface ${host}`);
-});
+if(env === 'docker') {
+  app.listen(port, '0.0.0.0', () => {
+    console.log(`Server running on host ${os.hostname()} and port ${port} and container network interface`);
+  });
+}
+else {
+  app.listen(port, () => {
+    console.log(`Server running on host ${os.hostname()} and port ${port} and default interfaces`);
+  });
+}
