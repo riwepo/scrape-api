@@ -1,2 +1,2 @@
 # scrape-api
-A puppeteer based scaping API
+A puppeteer based scraping API
